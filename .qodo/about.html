@@ -1,0 +1,825 @@
+
+about_html = '''<!-- ============================================ -->
+<!-- ZIDARO - about.html | About Us Page (Enhanced) -->
+<!-- ============================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Zidaro - Premium Footwear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#010528', accent: '#004BBE', 'accent-light': '#1a6bff', 'accent-glow': '#0066ff' },
+                    fontFamily: { sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #010528; border-radius: 4px; }
+        
+        /* Reveal Animation */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-60px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(60px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-right.active { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.85); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-scale.active { opacity: 1; transform: scale(1); }
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .float-anim-delay { animation: float 6s ease-in-out 2s infinite; }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #004BBE 0%, #1a6bff 50%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Card Hover */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 75, 190, 0.15);
+        }
+        
+        /* Team Card */
+        .team-card { position: relative; overflow: hidden; }
+        .team-card img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .team-card:hover img { transform: scale(1.1); }
+        .team-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(1,5,40,0.9) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease;
+            display: flex; align-items: flex-end; justify-content: center; padding-bottom: 1.5rem;
+        }
+        .team-card:hover .team-overlay { opacity: 1; }
+        
+        /* Timeline */
+        .timeline-line {
+            position: absolute; left: 50%; top: 0; bottom: 0;
+            width: 2px; background: linear-gradient(to bottom, #004BBE, #1a6bff, #004BBE);
+            transform: translateX(-50%);
+        }
+        .timeline-dot {
+            width: 16px; height: 16px; border-radius: 50%;
+            background: #004BBE; border: 4px solid white;
+            box-shadow: 0 0 0 4px rgba(0,75,190,0.2);
+            position: absolute; left: 50%; transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        /* Testimonial */
+        .testimonial-card {
+            background: white;
+            border: 1px solid rgba(0,75,190,0.1);
+            transition: all 0.4s ease;
+        }
+        .testimonial-card:hover {
+            border-color: rgba(0,75,190,0.3);
+            transform: translateY(-4px);
+        }
+        
+        /* Stat Counter */
+        .stat-number {
+            background: linear-gradient(135deg, #004BBE, #1a6bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+            animation: marquee 30s linear infinite;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+        
+        /* Parallax Hero */
+        .hero-parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+        
+        /* Glow Effect */
+        .glow-accent {
+            box-shadow: 0 0 40px rgba(0,75,190,0.3);
+        }
+        
+        /* Quote Icon */
+        .quote-icon {
+            font-size: 4rem;
+            line-height: 1;
+            opacity: 0.1;
+            position: absolute;
+            top: -10px; left: 20px;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-gray-50 antialiased overflow-x-hidden">
+
+    <!-- NAVBAR -->
+    <nav class="bg-primary/95 backdrop-blur-md shadow-lg fixed w-full top-0 z-50 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 group">
+            <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl group-hover:bg-accent-light transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                <i class="ph ph-sneaker-move"></i>
+            </div>
+            <span class="text-2xl font-bold text-white tracking-tight">Zidaro</span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-8">
+
+            <a href="index.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                Home
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <a href="shop.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                Shop
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <a href="categories.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                Categories
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <a href="about.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                About
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <a href="contact.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                Contact
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+        </div>
+
+        <!-- Icons -->
+        <div class="flex items-center gap-4">
+
+            <a href="wishlist.html" class="relative text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                <i class="ph ph-heart text-2xl"></i>
+            </a>
+
+            <a href="cart.html" class="relative text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                <i class="ph ph-shopping-cart text-2xl"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 w-5 h-5 bg-accent rounded-full text-xs flex items-center justify-center font-bold text-white hidden">0</span>
+            </a>
+
+            <a href="auth.html" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                <i class="ph ph-user text-2xl"></i>
+            </a>
+
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white transition-colors">
+                <i class="ph ph-list text-2xl"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-primary border-t border-gray-800">
+        <div class="px-6 py-4 space-y-3">
+
+            <a href="index.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Home</a>
+
+            <a href="shop.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Shop</a>
+
+            <a href="categories.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Categories</a>
+
+            <a href="about.html" class="block text-gray-300 hover:text-white py-2 transition-colors">About</a>
+
+            <a href="contact.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Contact</a>
+
+        </div>
+    </div>
+</nav>
+
+    <!-- HERO SECTION -->
+    <div class="pt-72px">
+        <div class="bg-primary text-white py-28 md:py-36 relative overflow-hidden">
+            <!-- Animated Background Elements -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                <div class="absolute top-10 right-10 w-[500px] h-[500px] bg-accent rounded-full opacity-10 blur-[100px] float-anim"></div>
+                <div class="absolute bottom-10 left-10 w-[400px] h-[400px] bg-blue-400 rounded-full opacity-10 blur-[100px] float-anim-delay"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[120px]"></div>
+                <!-- Grid Pattern -->
+                <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+            </div>
+            
+            <div class="relative max-w-7xl mx-auto px-6 text-center">
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-5 py-2 mb-8 reveal">
+                    <i class="ph ph-sparkle text-accent-light"></i>
+                    <span class="text-sm font-medium text-gray-300">Est. 2020 — Crafting Excellence</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black mb-6 reveal delay-100 leading-tight">
+                    Our <span class="gradient-text">Story</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed reveal delay-200">
+                    Since 2020, Zidaro has been on a mission to deliver premium footwear that combines 
+                    <span class="text-white font-semibold">cutting-edge design</span> with 
+                    <span class="text-white font-semibold">unmatched comfort</span>.
+                </p>
+                <div class="mt-10 flex flex-wrap justify-center gap-4 reveal delay-300">
+                    <a href="#mission" class="bg-accent hover:bg-accent-light text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-1">
+                        Discover More
+                    </a>
+                    <a href="shop.html" class="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:-translate-y-1">
+                        Shop Collection
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+                <i class="ph ph-caret-down text-2xl text-gray-500"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- BRAND MARQUEE -->
+    <div class="bg-white border-y border-gray-100 py-6 overflow-hidden">
+        <div class="flex whitespace-nowrap">
+            <div class="marquee-track flex items-center gap-16 px-8">
+                <span class="text-2xl font-bold text-gray-200">NIKE</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">ADIDAS</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">PUMA</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">NEW BALANCE</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">REEBOK</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">CONVERSE</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <!-- Duplicate for seamless loop -->
+                <span class="text-2xl font-bold text-gray-200">NIKE</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">ADIDAS</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">PUMA</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">NEW BALANCE</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">REEBOK</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+                <span class="text-2xl font-bold text-gray-200">CONVERSE</span>
+                <span class="text-accent text-4xl"><i class="ph ph-sneaker-move"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-7xl mx-auto px-6 py-20">
+        
+        <!-- Mission & Vision -->
+        <div id="mission" class="grid md:grid-cols-2 gap-8 mb-24">
+            <div class="bg-white rounded-3xl p-10 shadow-sm border border-gray-100 card-hover reveal">
+                <div class="w-16 h-16 bg-gradient-to-br from-accent to-accent-light rounded-2xl flex items-center justify-center text-3xl text-white mb-6 shadow-lg shadow-accent/30">
+                    <i class="ph ph-target"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-primary mb-4">Our Mission</h2>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    To provide premium, authentic footwear that empowers people to express their unique style while experiencing unparalleled comfort. We source directly from the world's best manufacturers to ensure every pair meets our exacting standards.
+                </p>
+                <div class="mt-6 flex items-center gap-3 text-accent font-medium">
+                    <i class="ph ph-arrow-right"></i>
+                    <span>Quality without compromise</span>
+                </div>
+            </div>
+            <div class="bg-white rounded-3xl p-10 shadow-sm border border-gray-100 card-hover reveal delay-100">
+                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-3xl text-white mb-6 shadow-lg shadow-purple-500/30">
+                    <i class="ph ph-eye"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-primary mb-4">Our Vision</h2>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    To become the world's most trusted destination for premium footwear, known for our curated selection, exceptional customer experience, and commitment to sustainability. We envision a future where quality and style go hand in hand.
+                </p>
+                <div class="mt-6 flex items-center gap-3 text-purple-500 font-medium">
+                    <i class="ph ph-arrow-right"></i>
+                    <span>Innovation meets elegance</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats with Counter Animation -->
+        <div class="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 md:p-20 mb-24 relative overflow-hidden reveal">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-blue-400/20 rounded-full blur-3xl"></div>
+            </div>
+            <div class="relative grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
+                <div class="reveal-scale">
+                    <div class="text-5xl md:text-6xl font-black text-white mb-2">
+                        <span class="counter" data-target="10000">0</span><span class="text-accent">+</span>
+                    </div>
+                    <p class="text-gray-400 font-medium">Happy Customers</p>
+                </div>
+                <div class="reveal-scale delay-100">
+                    <div class="text-5xl md:text-6xl font-black text-white mb-2">
+                        <span class="counter" data-target="500">0</span><span class="text-accent">+</span>
+                    </div>
+                    <p class="text-gray-400 font-medium">Products</p>
+                </div>
+                <div class="reveal-scale delay-200">
+                    <div class="text-5xl md:text-6xl font-black text-white mb-2">
+                        <span class="counter" data-target="50">0</span><span class="text-accent">+</span>
+                    </div>
+                    <p class="text-gray-400 font-medium">Brands</p>
+                </div>
+                <div class="reveal-scale delay-300">
+                    <div class="text-5xl md:text-6xl font-black text-white mb-2">
+                        <span class="counter" data-target="30">0</span><span class="text-accent">+</span>
+                    </div>
+                    <p class="text-gray-400 font-medium">Countries</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Journey Timeline -->
+        <div class="mb-24">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent font-semibold text-sm uppercase tracking-wider">The Journey</span>
+                <h2 class="text-4xl font-black text-primary mt-2 mb-4">How We Got Here</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">From a small startup to a global footwear destination</p>
+            </div>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <div class="timeline-line hidden md:block"></div>
+                
+                <!-- 2020 -->
+                <div class="relative mb-12 md:mb-0 md:h-48 reveal">
+                    <div class="md:flex items-center">
+                        <div class="md:w-1/2 md:pr-12 md:text-right">
+                            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover">
+                                <span class="text-accent font-black text-2xl">2020</span>
+                                <h3 class="text-xl font-bold text-primary mt-1 mb-2">The Beginning</h3>
+                                <p class="text-gray-500 text-sm">Zidaro was founded with a simple idea: everyone deserves access to premium footwear at fair prices.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-dot hidden md:block top-6"></div>
+                        <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+                    </div>
+                </div>
+                
+                <!-- 2021 -->
+                <div class="relative mb-12 md:mb-0 md:h-48 reveal">
+                    <div class="md:flex items-center">
+                        <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+                        <div class="timeline-dot hidden md:block top-6"></div>
+                        <div class="md:w-1/2 md:pl-12">
+                            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover">
+                                <span class="text-accent font-black text-2xl">2021</span>
+                                <h3 class="text-xl font-bold text-primary mt-1 mb-2">First 1,000 Customers</h3>
+                                <p class="text-gray-500 text-sm">Expanded our catalog to 100+ products and partnered with top global brands.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2023 -->
+                <div class="relative mb-12 md:mb-0 md:h-48 reveal">
+                    <div class="md:flex items-center">
+                        <div class="md:w-1/2 md:pr-12 md:text-right">
+                            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover">
+                                <span class="text-accent font-black text-2xl">2023</span>
+                                <h3 class="text-xl font-bold text-primary mt-1 mb-2">Global Expansion</h3>
+                                <p class="text-gray-500 text-sm">Started shipping to 20+ countries and launched our mobile app.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-dot hidden md:block top-6"></div>
+                        <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+                    </div>
+                </div>
+                
+                <!-- 2025 -->
+                <div class="relative reveal">
+                    <div class="md:flex items-center">
+                        <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+                        <div class="timeline-dot hidden md:block top-6 bg-green-500 shadow-green-500/30" style="box-shadow: 0 0 0 4px rgba(34,197,94,0.2);"></div>
+                        <div class="md:w-1/2 md:pl-12">
+                            <div class="bg-gradient-to-br from-accent to-accent-light rounded-2xl p-6 shadow-lg shadow-accent/20 text-white">
+                                <span class="font-black text-2xl">2025</span>
+                                <h3 class="text-xl font-bold mt-1 mb-2">10,000+ Happy Customers</h3>
+                                <p class="text-blue-100 text-sm">Today, Zidaro is a trusted name in premium footwear with a community that keeps growing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Values -->
+        <div class="mb-24">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent font-semibold text-sm uppercase tracking-wider">What Drives Us</span>
+                <h2 class="text-4xl font-black text-primary mt-2 mb-4">Our Core Values</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">The principles that guide everything we do at Zidaro</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center card-hover reveal">
+                    <div class="w-20 h-20 bg-gradient-to-br from-accent/10 to-accent/5 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl text-accent">
+                        <i class="ph ph-medal"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Quality First</h3>
+                    <p class="text-gray-500 leading-relaxed">We never compromise on quality. Every product is carefully inspected to ensure it meets our premium standards.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center card-hover reveal delay-100">
+                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/5 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl text-purple-500">
+                        <i class="ph ph-handshake"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Customer Trust</h3>
+                    <p class="text-gray-500 leading-relaxed">Your satisfaction is our priority. We build lasting relationships through transparency and exceptional service.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center card-hover reveal delay-200">
+                    <div class="w-20 h-20 bg-gradient-to-br from-amber-500/10 to-orange-500/5 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl text-amber-500">
+                        <i class="ph ph-lightning"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Innovation</h3>
+                    <p class="text-gray-500 leading-relaxed">We stay ahead of trends and continuously improve our offerings to bring you the latest in footwear technology.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="mb-24">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent font-semibold text-sm uppercase tracking-wider">The People</span>
+                <h2 class="text-4xl font-black text-primary mt-2 mb-4">Meet the Team</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">The passionate people behind Zidaro</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Alex Morgan -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden team-card reveal">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face" 
+                             alt="Alex Morgan" class="w-full h-full object-cover">
+                    </div>
+                    <div class="team-overlay">
+                        <div class="flex gap-3">
+                            <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent transition-colors">
+                                <i class="ph ph-linkedin-logo"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent transition-colors">
+                                <i class="ph ph-twitter-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-primary text-lg">Alex Morgan</h3>
+                        <p class="text-accent text-sm font-semibold mb-2">Founder & CEO</p>
+                        <p class="text-gray-500 text-sm">Visionary leader with 15 years in fashion retail.</p>
+                    </div>
+                </div>
+                
+                <!-- Sarah Chen -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden team-card reveal delay-100">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face" 
+                             alt="Sarah Chen" class="w-full h-full object-cover">
+                    </div>
+                    <div class="team-overlay">
+                        <div class="flex gap-3">
+                            <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent transition-colors">
+                                <i class="ph ph-linkedin-logo"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent transition-colors">
+                                <i class="ph ph-dribbble-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-primary text-lg">Sarah Chen</h3>
+                        <p class="text-accent text-sm font-semibold mb-2">Head of Design</p>
+                        <p class="text-gray-500 text-sm">Award-winning designer passionate about footwear.</p>
+                    </div>
+                </div>
+                
+                <!-- Marcus Johnson -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden team-card reveal delay-200">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" 
+                             alt="Marcus Johnson" class="w-full h-full object-cover">
+                    </div>
+                    <div class="team-overlay">
+                        <div class="flex gap-3">
+                            <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent transition-colors">
+                                <i class="ph ph-linkedin-logo"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent transition-colors">
+                                <i class="ph ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-primary text-lg">Marcus Johnson</h3>
+                        <p class="text-accent text-sm font-semibold mb-2">Tech Lead</p>
+                        <p class="text-gray-500 text-sm">Building seamless shopping experiences.</p>
+                    </div>
+                </div>
+                
+                <!-- Emily Davis -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden team-card reveal delay-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face" 
+                             alt="Emily Davis" class="w-full h-full object-cover">
+                    </div>
+                    <div class="team-overlay">
+                        <div class="flex gap-3">
+                            <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent transition-colors">
+                                <i class="ph ph-linkedin-logo"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent transition-colors">
+                                <i class="ph ph-instagram-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-primary text-lg">Emily Davis</h3>
+                        <p class="text-accent text-sm font-semibold mb-2">Customer Success</p>
+                        <p class="text-gray-500 text-sm">Ensuring every customer leaves happy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="mb-24">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent font-semibold text-sm uppercase tracking-wider">Testimonials</span>
+                <h2 class="text-4xl font-black text-primary mt-2 mb-4">What Our Customers Say</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">Real stories from real people who love Zidaro</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="testimonial-card rounded-2xl p-8 relative reveal">
+                    <div class="quote-icon text-accent">"</div>
+                    <div class="flex gap-1 mb-4">
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 leading-relaxed">"The quality of shoes from Zidaro is unmatched. I've been a loyal customer for 2 years and every purchase exceeds my expectations."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-primary text-sm">James Wilson</h4>
+                            <p class="text-gray-400 text-xs">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card rounded-2xl p-8 relative reveal delay-100">
+                    <div class="quote-icon text-accent">"</div>
+                    <div class="flex gap-1 mb-4">
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 leading-relaxed">"Fast shipping, authentic products, and amazing customer service. Zidaro is my go-to store for all my sneaker needs!"</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-primary text-sm">Maria Garcia</h4>
+                            <p class="text-gray-400 text-xs">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card rounded-2xl p-8 relative reveal delay-200">
+                    <div class="quote-icon text-accent">"</div>
+                    <div class="flex gap-1 mb-4">
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                        <i class="ph-fill ph-star text-amber-400 text-lg"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 leading-relaxed">"I was skeptical at first, but the attention to detail and packaging blew me away. Premium experience from start to finish."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-primary text-sm">David Kim</h4>
+                            <p class="text-gray-400 text-xs">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="bg-gradient-to-br from-accent to-primary rounded-3xl p-12 md:p-20 text-center relative overflow-hidden reveal">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-accent-light/20 rounded-full blur-3xl"></div>
+            </div>
+            <div class="relative">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Ready to Step Up?</h2>
+                <p class="text-blue-200 text-lg max-w-2xl mx-auto mb-10">Join thousands of happy customers and discover footwear that matches your style and ambition.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="shop.html" class="bg-white text-primary px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1">
+                        Shop Now
+                    </a>
+                    <a href="contact.html" class="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:bg-white/20 hover:-translate-y-1">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-primary text-white pt-20 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl"><i class="ph ph-sneaker-move"></i></div>
+                        <span class="text-2xl font-bold">Zidaro</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">Premium footwear for every step of your journey. Quality, style, and comfort in every pair.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 hover:scale-110">
+                            <i class="ph ph-facebook-logo text-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 hover:scale-110">
+                            <i class="ph ph-instagram-logo text-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 hover:scale-110">
+                            <i class="ph ph-twitter-logo text-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 hover:scale-110">
+                            <i class="ph ph-youtube-logo text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li><a href="index.html" class="hover:text-accent transition-colors flex items-center gap-2"><i class="ph ph-caret-right text-accent"></i>Home</a></li>
+                        <li><a href="shop.html" class="hover:text-accent transition-colors flex items-center gap-2"><i class="ph ph-caret-right text-accent"></i>Shop</a></li>
+                        <li><a href="about.html" class="hover:text-accent transition-colors flex items-center gap-2"><i class="ph ph-caret-right text-accent"></i>About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-accent transition-colors flex items-center gap-2"><i class="ph ph-caret-right text-accent"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Categories</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li><a href="shop.html?cat=running" class="hover:text-accent transition-colors flex items-center gap-2"><i class="ph ph-caret-right text-accent"></i>Running</a></li>
+                        <li><a href="shop.html?cat=casual" class="hover:text-accent transition-colors flex items-center gap-2"><i class="ph ph-caret-right text-accent"></i>Casual</a></li>
+                        <li><a href="shop.html?cat=formal" class="hover:text-accent transition-colors flex items-center gap-2"><i class="ph ph-caret-right text-accent"></i>Formal</a></li>
+                        <li><a href="shop.html?cat=luxury" class="hover:text-accent transition-colors flex items-center gap-2"><i class="ph ph-caret-right text-accent"></i>Luxury</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Contact</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="ph ph-map-pin text-accent text-lg mt-0.5"></i>
+                            <span>123 Premium Street, New York, NY 10001</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ph ph-phone text-accent text-lg"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ph ph-envelope text-accent text-lg"></i>
+                            <span>hello@zidaro.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">© 2026 Zidaro. All rights reserved.</p>
+                <div class="flex gap-6 text-gray-500 text-sm">
+                    <a href="#" class="hover:text-accent transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-accent transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-accent transition-colors">Shipping Info</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-full shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3 border border-white/10">
+        <i id="toast-icon" class="ph ph-check-circle text-accent text-xl"></i>
+        <span id="toast-message">Item added to cart!</span>
+    </div>
+    <script src="./js/main.js"></script>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            counter.textContent = Math.floor(current).toLocaleString();
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target.toLocaleString();
+                        }
+                    };
+                    updateCounter();
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // Navbar scroll effect
+        const navbar = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-xl');
+                navbar.classList.remove('shadow-lg');
+            } else {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.remove('shadow-xl');
+            }
+        });
+        // Active Navbar Link
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+        document.querySelectorAll('nav a').forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+        link.classList.remove('text-gray-300');
+        link.classList.add('text-white', 'font-semibold');
+
+        const line = link.querySelector('span');
+        if (line) {
+            line.classList.remove('w-0');
+            line.classList.add('w-full');
+        }
+        }
+        });
+    </script>
+</body>
+</html>

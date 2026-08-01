@@ -1,0 +1,747 @@
+product_html = '''<!-- ============================================ -->
+<!-- ZIDARO - product.html | Product Detail Page -->
+<!-- ============================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Zidaro - Premium Footwear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#010528',
+                        accent: '#004BBE',
+                        'accent-light': '#1a6bff',
+                        'accent-dark': '#003a99',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #010528; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #004BBE; }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Size selector styles */
+        .size-btn.selected {
+            background-color: #004BBE;
+            color: white;
+            border-color: #004BBE;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-gray-50 antialiased">
+
+    <!-- ============================================ -->
+    <!-- NAVBAR                                       -->
+    <!-- ============================================ -->
+    <nav class="bg-primary shadow-md fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl group-hover:bg-accent-light transition-colors duration-300">
+                    <i class="ph ph-sneaker-move"></i>
+                </div>
+                <span class="text-2xl font-bold text-white tracking-tight">Zidaro</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">Home</a>
+                <a href="shop.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">Shop</a>
+                <a href="categories.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">Categories</a>
+                <a href="about.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">About</a>
+                <a href="contact.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">Contact</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="wishlist.html" class="relative text-gray-300 hover:text-white transition-colors duration-300">
+                    <i class="ph ph-heart text-2xl"></i>
+                </a>
+                <a href="cart.html" class="relative text-gray-300 hover:text-white transition-colors duration-300">
+                    <i class="ph ph-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 w-5 h-5 bg-accent rounded-full text-xs flex items-center justify-center font-bold text-white hidden">0</span>
+                </a>
+                <a href="auth.html" class="text-gray-300 hover:text-white transition-colors duration-300">
+                    <i class="ph ph-user text-2xl"></i>
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white transition-colors">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-primary border-t border-gray-800">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Home</a>
+                <a href="shop.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Shop</a>
+                <a href="categories.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Categories</a>
+                <a href="about.html" class="block text-gray-300 hover:text-white py-2 transition-colors">About</a>
+                <a href="contact.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- BREADCRUMB                                   -->
+    <!-- Shows navigation path: Home > Category > Product -->
+    <!-- ============================================ -->
+    <div class="pt-20 bg-white border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <!-- flex items-center gap-2: horizontal layout with small gaps -->
+            <div class="flex items-center gap-2 text-sm text-gray-500">
+                <a href="index.html" class="hover:text-accent transition-colors">Home</a>
+                <i class="ph ph-caret-right text-xs"></i>
+                <a href="shop.html" class="hover:text-accent transition-colors">Shop</a>
+                <i class="ph ph-caret-right text-xs"></i>
+                <!-- id="breadcrumb-cat": updated by JS with actual category -->
+                <a href="shop.html" id="breadcrumb-cat" class="hover:text-accent transition-colors">Category</a>
+                <i class="ph ph-caret-right text-xs"></i>
+                <!-- id="breadcrumb-name": updated by JS with product name -->
+                <span id="breadcrumb-name" class="text-primary font-medium">Product</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PRODUCT DETAILS SECTION                      -->
+    <!-- ============================================ -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid lg:grid-cols-2 gap-12">
+            
+            <!-- ============================================ -->
+            <!-- LEFT: PRODUCT IMAGES                         -->
+            <!-- ============================================ -->
+            <div class="space-y-4">
+                <!-- Main Image -->
+                <!-- id="main-image-container": used to update background color -->
+                <div id="main-image-container" class="bg-gray-100 rounded-3xl aspect-square flex items-center justify-center relative overflow-hidden">
+                    <!-- id="main-emoji": updated by JS with product emoji -->
+                    <span id="main-emoji" class="text-[12rem] md:text-[16rem] drop-shadow-2xl transition-transform duration-500 hover:scale-110">👟</span>
+                    <!-- Badge overlay -->
+                    <span id="product-badge" class="absolute top-4 right-4 bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-full hidden">New</span>
+                </div>
+                
+                <!-- Thumbnail Gallery (simulated with color variations) -->
+                <div class="grid grid-cols-4 gap-3">
+                    <button class="aspect-square bg-gray-100 rounded-xl flex items-center justify-center text-4xl border-2 border-accent cursor-pointer hover:bg-gray-200 transition-colors">
+                        👟
+                    </button>
+                    <button class="aspect-square bg-gray-100 rounded-xl flex items-center justify-center text-4xl border-2 border-transparent hover:border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors opacity-60">
+                        👟
+                    </button>
+                    <button class="aspect-square bg-gray-100 rounded-xl flex items-center justify-center text-4xl border-2 border-transparent hover:border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors opacity-60">
+                        👟
+                    </button>
+                    <button class="aspect-square bg-gray-100 rounded-xl flex items-center justify-center text-4xl border-2 border-transparent hover:border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors opacity-60">
+                        👟
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ============================================ -->
+            <!-- RIGHT: PRODUCT INFO                        -->
+            <!-- ============================================ -->
+            <div class="space-y-6">
+                
+                <!-- Category & Rating Row -->
+                <div class="flex items-center justify-between">
+                    <!-- id="product-category": updated by JS -->
+                    <span id="product-category" class="text-sm font-medium text-accent bg-accent/10 px-3 py-1 rounded-full">Running</span>
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-1 text-yellow-400">
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                        </div>
+                        <!-- id="product-rating": updated by JS -->
+                        <span id="product-rating" class="font-bold text-primary">4.8</span>
+                        <span class="text-gray-400 text-sm">(128 reviews)</span>
+                    </div>
+                </div>
+                
+                <!-- Product Name -->
+                <!-- id="product-name": updated by JS -->
+                <h1 id="product-name" class="text-3xl md:text-4xl font-bold text-primary">Nike Air Max 2026</h1>
+                
+                <!-- Price -->
+                <div class="flex items-center gap-4">
+                    <!-- id="product-price": updated by JS -->
+                    <span id="product-price" class="text-3xl font-bold text-accent">$149.00</span>
+                    <!-- id="product-old-price": updated by JS -->
+                    <span id="product-old-price" class="text-xl text-gray-400 line-through">$199.00</span>
+                    <!-- Discount badge -->
+                    <span id="discount-badge" class="bg-green-500 text-white text-sm font-bold px-3 py-1 rounded-full">-25%</span>
+                </div>
+                
+                <!-- Description -->
+                <!-- id="product-description": updated by JS -->
+                <p id="product-description" class="text-gray-600 leading-relaxed text-lg">
+                    Experience maximum comfort with the latest Air Max technology. Breathable mesh upper with responsive cushioning for all-day wear.
+                </p>
+                
+                <!-- Divider -->
+                <hr class="border-gray-200">
+                
+                <!-- Size Selector -->
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-bold text-primary">Select Size</h3>
+                        <button class="text-accent text-sm font-medium hover:underline">Size Guide</button>
+                    </div>
+                    <!-- id="size-container": sizes injected by JS -->
+                    <div id="size-container" class="flex flex-wrap gap-3">
+                        <!-- Size buttons injected by JS -->
+                    </div>
+                    <!-- id="size-error": shows if user tries to add without selecting size -->
+                    <p id="size-error" class="text-red-500 text-sm mt-2 hidden">Please select a size first.</p>
+                </div>
+                
+                <!-- Quantity & Actions -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <!-- Quantity Selector -->
+                    <div class="flex items-center border-2 border-gray-200 rounded-xl overflow-hidden">
+                        <!-- Decrease button -->
+                        <button onclick="updateQuantity(-1)" class="w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition-colors text-xl font-bold text-gray-600">
+                            −
+                        </button>
+                        <!-- Quantity display -->
+                        <span id="quantity" class="w-16 h-12 flex items-center justify-center font-bold text-primary text-lg">1</span>
+                        <!-- Increase button -->
+                        <button onclick="updateQuantity(1)" class="w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition-colors text-xl font-bold text-gray-600">
+                            +
+                        </button>
+                    </div>
+                    
+                    <!-- Add to Cart Button -->
+                    <!-- flex-1: takes remaining width -->
+                    <button onclick="addToCartWithSize()" class="flex-1 bg-accent hover:bg-accent-light text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:shadow-xl flex items-center justify-center gap-2">
+                        <i class="ph ph-shopping-cart text-xl"></i>
+                        Add to Cart
+                    </button>
+                    
+                    <!-- Add to Wishlist Button -->
+                    <button id="wishlist-btn" onclick="toggleWishlistFromPage()" class="w-14 h-14 border-2 border-gray-200 rounded-xl flex items-center justify-center hover:border-accent hover:text-accent transition-all">
+                        <i class="ph ph-heart text-2xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Trust Badges -->
+                <div class="grid grid-cols-3 gap-4 pt-4">
+                    <div class="text-center p-4 bg-gray-50 rounded-xl">
+                        <i class="ph ph-truck text-accent text-2xl mb-2"></i>
+                        <p class="text-xs font-medium text-gray-600">Free Shipping</p>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-xl">
+                        <i class="ph ph-shield-check text-accent text-2xl mb-2"></i>
+                        <p class="text-xs font-medium text-gray-600">Authentic</p>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-xl">
+                        <i class="ph ph-arrow-u-up-left text-accent text-2xl mb-2"></i>
+                        <p class="text-xs font-medium text-gray-600">30-Day Returns</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- TABS: Description, Reviews, Shipping         -->
+        <!-- ============================================ -->
+        <div class="mt-16">
+            <!-- Tab Buttons -->
+            <div class="border-b border-gray-200 mb-8">
+                <div class="flex gap-8">
+                    <!-- data-tab attribute identifies which tab this button controls -->
+                    <button onclick="switchTab('description')" data-tab="description" class="tab-btn pb-4 text-accent font-bold border-b-2 border-accent transition-colors">
+                        Description
+                    </button>
+                    <button onclick="switchTab('reviews')" data-tab="reviews" class="tab-btn pb-4 text-gray-500 font-medium hover:text-primary transition-colors">
+                        Reviews (128)
+                    </button>
+                    <button onclick="switchTab('shipping')" data-tab="shipping" class="tab-btn pb-4 text-gray-500 font-medium hover:text-primary transition-colors">
+                        Shipping & Returns
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Tab Content: Description -->
+            <div id="tab-description" class="tab-content">
+                <div class="max-w-3xl">
+                    <h3 class="text-xl font-bold text-primary mb-4">Product Details</h3>
+                    <div class="space-y-4 text-gray-600 leading-relaxed">
+                        <p>Experience the perfect blend of style and performance with our premium footwear collection. Each pair is crafted with meticulous attention to detail using only the finest materials.</p>
+                        <ul class="space-y-2 list-disc list-inside">
+                            <li>Premium breathable mesh upper for maximum airflow</li>
+                            <li>Responsive foam cushioning technology</li>
+                            <li>Durable rubber outsole with enhanced traction</li>
+                            <li>Padded collar and tongue for ankle support</li>
+                            <li>Removable insole for custom orthotics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab Content: Reviews (hidden by default) -->
+            <div id="tab-reviews" class="tab-content hidden">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Rating Summary -->
+                    <div class="bg-gray-50 rounded-2xl p-6">
+                        <div class="text-center mb-4">
+                            <div class="text-5xl font-bold text-primary">4.8</div>
+                            <div class="flex justify-center gap-1 text-yellow-400 my-2">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star-half"></i>
+                            </div>
+                            <p class="text-gray-500 text-sm">Based on 128 reviews</p>
+                        </div>
+                        <!-- Rating bars -->
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="w-8">5★</span>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-yellow-400 rounded-full" style="width: 75%"></div>
+                                </div>
+                                <span class="text-gray-500">96</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="w-8">4★</span>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-yellow-400 rounded-full" style="width: 20%"></div>
+                                </div>
+                                <span class="text-gray-500">24</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="w-8">3★</span>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-yellow-400 rounded-full" style="width: 5%"></div>
+                                </div>
+                                <span class="text-gray-500">6</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="w-8">2★</span>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-yellow-400 rounded-full" style="width: 2%"></div>
+                                </div>
+                                <span class="text-gray-500">2</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="w-8">1★</span>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-yellow-400 rounded-full" style="width: 0%"></div>
+                                </div>
+                                <span class="text-gray-500">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Review List -->
+                    <div class="md:col-span-2 space-y-4">
+                        <!-- Review 1 -->
+                        <div class="bg-white border border-gray-100 rounded-2xl p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center text-accent font-bold">JD</div>
+                                    <div>
+                                        <p class="font-bold text-primary">John Doe</p>
+                                        <p class="text-xs text-gray-400">2 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex text-yellow-400">
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-600">Absolutely love these shoes! The comfort is unmatched and they look even better in person. Highly recommend!</p>
+                        </div>
+                        
+                        <!-- Review 2 -->
+                        <div class="bg-white border border-gray-100 rounded-2xl p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">SM</div>
+                                    <div>
+                                        <p class="font-bold text-primary">Sarah Miller</p>
+                                        <p class="text-xs text-gray-400">1 week ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex text-yellow-400">
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph ph-star text-gray-300"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-600">Great quality and fast shipping. The size runs slightly small so I'd recommend ordering half a size up.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab Content: Shipping (hidden by default) -->
+            <div id="tab-shipping" class="tab-content hidden">
+                <div class="max-w-3xl space-y-6">
+                    <div class="bg-gray-50 rounded-2xl p-6">
+                        <h4 class="font-bold text-primary mb-3 flex items-center gap-2">
+                            <i class="ph ph-truck text-accent"></i>
+                            Shipping Information
+                        </h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li>• Free standard shipping on orders over $100</li>
+                            <li>• Standard delivery: 5-7 business days</li>
+                            <li>• Express delivery: 2-3 business days ($15)</li>
+                            <li>• Same-day delivery available in select cities</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 rounded-2xl p-6">
+                        <h4 class="font-bold text-primary mb-3 flex items-center gap-2">
+                            <i class="ph ph-arrow-u-up-left text-accent"></i>
+                            Return Policy
+                        </h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li>• 30-day hassle-free returns</li>
+                            <li>• Items must be unworn with original packaging</li>
+                            <li>• Free return shipping on defective items</li>
+                            <li>• Refunds processed within 5 business days</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- RELATED PRODUCTS                             -->
+        <!-- ============================================ -->
+        <div class="mt-20">
+            <h2 class="text-2xl font-bold text-primary mb-8">You May Also Like</h2>
+            <div id="related-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Related products injected by JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                       -->
+    <!-- ============================================ -->
+    <footer class="bg-primary text-white pt-16 pb-8 mt-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl"><i class="ph ph-sneaker-move"></i></div>
+                        <span class="text-2xl font-bold">Zidaro</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Premium footwear for every step of your journey.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors"><i class="ph ph-facebook-logo text-lg"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors"><i class="ph ph-instagram-logo text-lg"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors"><i class="ph ph-twitter-logo text-lg"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li><a href="index.html" class="hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="shop.html" class="hover:text-accent transition-colors">Shop</a></li>
+                        <li><a href="about.html" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Categories</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li><a href="shop.html?cat=running" class="hover:text-accent transition-colors">Running</a></li>
+                        <li><a href="shop.html?cat=casual" class="hover:text-accent transition-colors">Casual</a></li>
+                        <li><a href="shop.html?cat=formal" class="hover:text-accent transition-colors">Formal</a></li>
+                        <li><a href="shop.html?cat=luxury" class="hover:text-accent transition-colors">Luxury</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Contact</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex items-start gap-3"><i class="ph ph-map-pin text-accent text-lg mt-0.5"></i><span>123 Premium Street, NY 10001</span></li>
+                        <li class="flex items-center gap-3"><i class="ph ph-phone text-accent text-lg"></i><span>+1 (555) 123-4567</span></li>
+                        <li class="flex items-center gap-3"><i class="ph ph-envelope text-accent text-lg"></i><span>hello@zidaro.com</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+                © 2026 Zidaro. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-full shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i id="toast-icon" class="ph ph-check-circle text-accent text-xl"></i>
+        <span id="toast-message">Item added to cart!</span>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // ============================================
+        // PRODUCT PAGE SPECIFIC JAVASCRIPT
+        // ============================================
+        
+        // Current product being viewed
+        let currentProduct = null;
+        
+        // Selected size and quantity
+        let selectedSize = null;
+        let selectedQuantity = 1;
+        
+        // ============================================
+        // LOAD PRODUCT DATA
+        // ============================================
+        
+        /**
+         * Load product from URL parameter
+         * URL format: product.html?id=1
+         */
+        function loadProduct() {
+            // Get product ID from URL
+            const productId = parseInt(getUrlParam('id'));
+            
+            // Find product in our data
+            currentProduct = allProducts.find(p => p.id === productId);
+            
+            // If product not found, redirect to shop
+            if (!currentProduct) {
+                window.location.href = 'shop.html';
+                return;
+            }
+            
+            // Update page title
+            document.title = `${currentProduct.name} | Zidaro - Premium Footwear`;
+            
+            // Update breadcrumb
+            document.getElementById('breadcrumb-cat').textContent = currentProduct.category;
+            document.getElementById('breadcrumb-cat').href = `shop.html?cat=${currentProduct.category.toLowerCase()}`;
+            document.getElementById('breadcrumb-name').textContent = currentProduct.name;
+            
+            // Update main image
+            document.getElementById('main-emoji').textContent = currentProduct.emoji;
+            document.getElementById('main-image-container').className = `rounded-3xl aspect-square flex items-center justify-center relative overflow-hidden ${currentProduct.color}`;
+            
+            // Update badge
+            const badgeEl = document.getElementById('product-badge');
+            if (currentProduct.badge) {
+                badgeEl.textContent = currentProduct.badge;
+                badgeEl.classList.remove('hidden');
+            } else {
+                badgeEl.classList.add('hidden');
+            }
+            
+            // Update category
+            document.getElementById('product-category').textContent = currentProduct.category;
+            
+            // Update rating
+            document.getElementById('product-rating').textContent = currentProduct.rating;
+            
+            // Update name
+            document.getElementById('product-name').textContent = currentProduct.name;
+            
+            // Update prices
+            document.getElementById('product-price').textContent = formatPrice(currentProduct.price);
+            
+            const oldPriceEl = document.getElementById('product-old-price');
+            const discountEl = document.getElementById('discount-badge');
+            if (currentProduct.oldPrice) {
+                oldPriceEl.textContent = formatPrice(currentProduct.oldPrice);
+                oldPriceEl.classList.remove('hidden');
+                const discount = Math.round(((currentProduct.oldPrice - currentProduct.price) / currentProduct.oldPrice) * 100);
+                discountEl.textContent = `-${discount}%`;
+                discountEl.classList.remove('hidden');
+            } else {
+                oldPriceEl.classList.add('hidden');
+                discountEl.classList.add('hidden');
+            }
+            
+            // Update description
+            document.getElementById('product-description').textContent = currentProduct.description;
+            
+            // Render size buttons
+            renderSizes();
+            
+            // Update wishlist button state
+            updateWishlistButton();
+            
+            // Render related products
+            renderRelatedProducts();
+        }
+        
+        /**
+         * Render size selector buttons
+         */
+        function renderSizes() {
+            const container = document.getElementById('size-container');
+            
+            if (!currentProduct.sizes || currentProduct.sizes.length === 0) {
+                container.innerHTML = '<p class="text-gray-400">One size fits all</p>';
+                return;
+            }
+            
+            container.innerHTML = currentProduct.sizes.map(size => `
+                <button onclick="selectSize(${size})" data-size="${size}" 
+                    class="size-btn w-14 h-14 border-2 border-gray-200 rounded-xl font-bold text-primary hover:border-accent transition-all">
+                    ${size}
+                </button>
+            `).join('');
+        }
+        
+        /**
+         * Handle size selection
+         */
+        function selectSize(size) {
+            selectedSize = size;
+            
+            // Remove 'selected' class from all buttons
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            // Add 'selected' class to clicked button
+            document.querySelector(`.size-btn[data-size="${size}"]`).classList.add('selected');
+            
+            // Hide error message
+            document.getElementById('size-error').classList.add('hidden');
+        }
+        
+        /**
+         * Update quantity
+         */
+        function updateQuantity(delta) {
+            selectedQuantity += delta;
+            
+            // Ensure quantity doesn't go below 1
+            if (selectedQuantity < 1) selectedQuantity = 1;
+            
+            // Update display
+            document.getElementById('quantity').textContent = selectedQuantity;
+        }
+        
+        /**
+         * Add to cart with size validation
+         */
+        function addToCartWithSize() {
+            // Check if size is required and selected
+            if (currentProduct.sizes && currentProduct.sizes.length > 0 && !selectedSize) {
+                document.getElementById('size-error').classList.remove('hidden');
+                return;
+            }
+            
+            // Add to cart (from main.js)
+            addToCart(currentProduct.id, selectedQuantity, selectedSize);
+        }
+        
+        /**
+         * Toggle wishlist from product page
+         */
+        function toggleWishlistFromPage() {
+            if (!currentProduct) return;
+            
+            toggleWishlist(currentProduct.id);
+            updateWishlistButton();
+        }
+        
+        /**
+         * Update wishlist button appearance
+         */
+        function updateWishlistButton() {
+            if (!currentProduct) return;
+            
+            const btn = document.getElementById('wishlist-btn');
+            const icon = btn.querySelector('i');
+            
+            if (isInWishlist(currentProduct.id)) {
+                btn.classList.add('border-accent', 'text-accent');
+                icon.className = 'ph-fill ph-heart text-2xl text-accent';
+            } else {
+                btn.classList.remove('border-accent', 'text-accent');
+                icon.className = 'ph ph-heart text-2xl';
+            }
+        }
+        
+        /**
+         * Switch between tabs
+         */
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show selected tab content
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            // Update tab buttons styling
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.dataset.tab === tabName) {
+                    // Active tab: accent color, bold, bottom border
+                    btn.classList.add('text-accent', 'font-bold', 'border-b-2', 'border-accent');
+                    btn.classList.remove('text-gray-500', 'font-medium');
+                } else {
+                    // Inactive tab: gray, medium weight, no border
+                    btn.classList.remove('text-accent', 'font-bold', 'border-b-2', 'border-accent');
+                    btn.classList.add('text-gray-500', 'font-medium');
+                }
+            });
+        }
+        
+        /**
+         * Render related products (same category, excluding current)
+         */
+        function renderRelatedProducts() {
+            if (!currentProduct) return;
+            
+            // Get products in same category, excluding current
+            const related = allProducts
+                .filter(p => p.category === currentProduct.category && p.id !== currentProduct.id)
+                .slice(0, 4); // Max 4 products
+            
+            const container = document.getElementById('related-products');
+            
+            if (related.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 col-span-full">No related products found.</p>';
+                return;
+            }
+            
+            container.innerHTML = related.map(p => createProductCard(p)).join('');
+            updateWishlistIcons();
+        }
+        
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProduct();
+        });
+    </script>
+</body>
+</html>

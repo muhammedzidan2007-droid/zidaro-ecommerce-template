@@ -1,0 +1,423 @@
+<!-- ============================================ -->
+<!-- ZIDARO - cart.html | Shopping Cart Page      -->
+<!-- ============================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Zidaro - Premium Footwear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#010528',
+                        accent: '#004BBE',
+                        'accent-light': '#1a6bff',
+                        'accent-dark': '#003a99',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #010528; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #004BBE; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="font-sans text-gray-700 bg-gray-50 antialiased">
+
+    <!-- ============================================ -->
+    <!-- NAVBAR                                       -->
+    <!-- ============================================ -->
+    <nav class="bg-primary shadow-md fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl group-hover:bg-accent-light transition-colors duration-300">
+                    <i class="ph ph-sneaker-move"></i>
+                </div>
+                <span class="text-2xl font-bold text-white tracking-tight">Zidaro</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">Home</a>
+                <a href="shop.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">Shop</a>
+                <a href="categories.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">Categories</a>
+                <a href="about.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">About</a>
+                <a href="contact.html" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">Contact</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="wishlist.html" class="relative text-gray-300 hover:text-white transition-colors duration-300">
+                    <i class="ph ph-heart text-2xl"></i>
+                </a>
+                <a href="cart.html" class="relative text-white transition-colors duration-300">
+                    <i class="ph ph-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 w-5 h-5 bg-accent rounded-full text-xs flex items-center justify-center font-bold text-white hidden">0</span>
+                </a>
+                <a href="auth.html" class="text-gray-300 hover:text-white transition-colors duration-300">
+                    <i class="ph ph-user text-2xl"></i>
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white transition-colors p-2" type="button" aria-label="Toggle menu">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-primary border-t border-gray-800 absolute w-full left-0 top-full shadow-2xl">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">Home</a>
+                <a href="shop.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">Shop</a>
+                <a href="categories.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">Categories</a>
+                <a href="about.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">About</a>
+                <a href="contact.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- PAGE HEADER                                  -->
+    <!-- ============================================ -->
+    <!-- pt-[72px] = بالظبط ارتفاع الـ navbar (py-4 + logo) -->
+    <section class="bg-primary text-white pt-[72px] pb-12 relative overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-accent rounded-full opacity-10 blur-3xl"></div>
+            </div>
+            <div class="relative max-w-7xl mx-auto px-6">
+                <h1 class="text-3xl md:text-4xl font-bold mb-2">Shopping Cart</h1>
+                <p class="text-gray-300">Review your items and proceed to checkout</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CART CONTENT                                 -->
+    <!-- ============================================ -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- ============================================ -->
+            <!-- LEFT: CART ITEMS                             -->
+            <!-- ============================================ -->
+            <div class="flex-1">
+
+                <!-- Cart Items Container -->
+                <div id="cart-items-container" class="space-y-4">
+                    <!-- Cart items injected by JS -->
+                </div>
+
+                <!-- Empty Cart State (hidden by default) -->
+                <div id="empty-cart" class="hidden text-center py-20">
+                    <div class="text-8xl mb-6">🛒</div>
+                    <h2 class="text-2xl font-bold text-primary mb-3">Your Cart is Empty</h2>
+                    <p class="text-gray-500 mb-8 max-w-md mx-auto">Looks like you haven't added any items to your cart yet. Explore our collection and find your perfect pair!</p>
+                    <a href="shop.html" class="inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-white px-8 py-4 rounded-xl font-bold transition-all hover:shadow-lg">
+                        <i class="ph ph-shopping-bag text-xl"></i>
+                        Start Shopping
+                    </a>
+                </div>
+
+                <!-- Continue Shopping Link -->
+                <div class="mt-8">
+                    <a href="shop.html" class="inline-flex items-center gap-2 text-accent font-semibold hover:underline transition-all">
+                        <i class="ph ph-arrow-left"></i>
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- RIGHT: ORDER SUMMARY                         -->
+            <!-- ============================================ -->
+            <div class="lg:w-96 flex-shrink-0">
+                <div class="lg:sticky lg:top-24">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6">
+                        <h2 class="text-xl font-bold text-primary">Order Summary</h2>
+
+                        <!-- Summary Rows -->
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between text-gray-600">
+                                <span>Subtotal</span>
+                                <span id="summary-subtotal" class="font-medium">$0.00</span>
+                            </div>
+                            <div class="flex items-center justify-between text-gray-600">
+                                <span>Shipping</span>
+                                <span id="summary-shipping" class="font-medium text-green-600">Free</span>
+                            </div>
+                            <div class="flex items-center justify-between text-gray-600">
+                                <span>Tax (8%)</span>
+                                <span id="summary-tax" class="font-medium">$0.00</span>
+                            </div>
+                            <div id="discount-row" class="flex items-center justify-between text-green-600 hidden">
+                                <span>Discount</span>
+                                <span id="summary-discount" class="font-medium">-$0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr class="border-gray-200">
+
+                        <!-- Total -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-primary">Total</span>
+                            <span id="summary-total" class="text-2xl font-bold text-accent">$0.00</span>
+                        </div>
+
+                        <!-- Promo Code Input -->
+                        <div class="pt-2">
+                            <label class="text-sm font-medium text-gray-600 mb-2 block">Promo Code</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="promo-input" placeholder="Enter code"
+                                    class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm uppercase">
+                                <button onclick="applyPromo()" class="bg-primary hover:bg-gray-800 text-white px-4 py-3 rounded-xl font-medium transition-colors">
+                                    Apply
+                                </button>
+                            </div>
+                            <p id="promo-message" class="text-sm mt-2 hidden"></p>
+                        </div>
+
+                        <!-- Checkout Button -->
+                        <a href="checkout.html" id="checkout-btn" class="block w-full bg-accent hover:bg-accent-light text-white py-4 rounded-xl font-bold text-center transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2">
+                            Proceed to Checkout
+                            <i class="ph ph-arrow-right text-xl"></i>
+                        </a>
+
+                        <!-- Secure checkout note -->
+                        <div class="flex items-center justify-center gap-2 text-xs text-gray-400">
+                            <i class="ph ph-lock-key"></i>
+                            Secure Checkout with SSL Encryption
+                        </div>
+                    </div>
+
+                    <!-- Accepted Payments -->
+                    <div class="mt-4 bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+                        <p class="text-xs text-gray-500 text-center mb-3">We Accept</p>
+                        <div class="flex items-center justify-center gap-3 text-2xl">
+                            <span title="Visa">💳</span>
+                            <span title="Mastercard">💳</span>
+                            <span title="PayPal">🅿️</span>
+                            <span title="Apple Pay">🍎</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                       -->
+    <!-- ============================================ -->
+    <footer class="bg-primary text-white pt-16 pb-8 mt-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl"><i class="ph ph-sneaker-move"></i></div>
+                        <span class="text-2xl font-bold">Zidaro</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Premium footwear for every step of your journey.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors"><i class="ph ph-facebook-logo text-lg"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors"><i class="ph ph-instagram-logo text-lg"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-colors"><i class="ph ph-twitter-logo text-lg"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li><a href="index.html" class="hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="shop.html" class="hover:text-accent transition-colors">Shop</a></li>
+                        <li><a href="about.html" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Categories</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li><a href="shop.html?cat=running" class="hover:text-accent transition-colors">Running</a></li>
+                        <li><a href="shop.html?cat=casual" class="hover:text-accent transition-colors">Casual</a></li>
+                        <li><a href="shop.html?cat=formal" class="hover:text-accent transition-colors">Formal</a></li>
+                        <li><a href="shop.html?cat=luxury" class="hover:text-accent transition-colors">Luxury</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Contact</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex items-start gap-3"><i class="ph ph-map-pin text-accent text-lg mt-0.5"></i><span>123 Premium Street, NY 10001</span></li>
+                        <li class="flex items-center gap-3"><i class="ph ph-phone text-accent text-lg"></i><span>+1 (555) 123-4567</span></li>
+                        <li class="flex items-center gap-3"><i class="ph ph-envelope text-accent text-lg"></i><span>hello@zidaro.com</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+                © 2026 Zidaro. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-full shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i id="toast-icon" class="ph ph-check-circle text-accent text-xl"></i>
+        <span id="toast-message">Item added to cart!</span>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // ============================================
+        // CART PAGE SPECIFIC JAVASCRIPT
+        // ============================================
+
+        let appliedDiscount = 0;
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const emptyState = document.getElementById('empty-cart');
+
+            if (cart.length === 0) {
+                container.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                document.getElementById('checkout-btn').classList.add('opacity-50', 'pointer-events-none');
+                updateSummary(0);
+                return;
+            }
+
+            container.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+            document.getElementById('checkout-btn').classList.remove('opacity-50', 'pointer-events-none');
+
+            container.innerHTML = cart.map((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                return `
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col sm:flex-row gap-6 reveal active">
+                        <div class="w-full sm:w-32 h-32 ${item.color} rounded-xl flex items-center justify-center flex-shrink-0">
+                            <span class="text-5xl">${item.emoji}</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="text-xs font-medium text-accent bg-accent/10 px-2 py-1 rounded-full">${item.category}</span>
+                                    <h3 class="font-bold text-primary text-lg mt-2">${item.name}</h3>
+                                    ${item.size ? `<p class="text-sm text-gray-500 mt-1">Size: ${item.size}</p>` : ''}
+                                </div>
+                                <button onclick="removeCartItem(${index})" class="text-gray-400 hover:text-red-500 transition-colors p-1" title="Remove item">
+                                    <i class="ph ph-trash text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="flex items-end justify-between mt-4">
+                                <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                                    <button onclick="updateCartItemQty(${index}, -1)" class="w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition-colors text-gray-600 font-bold">
+                                        <i class="ph ph-minus"></i>
+                                    </button>
+                                    <span class="w-12 h-10 flex items-center justify-center font-bold text-primary">${item.quantity}</span>
+                                    <button onclick="updateCartItemQty(${index}, 1)" class="w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition-colors text-gray-600 font-bold">
+                                        <i class="ph ph-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xl font-bold text-accent">$${itemTotal.toFixed(2)}</p>
+                                    <p class="text-sm text-gray-400">$${item.price.toFixed(2)} each</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            updateSummary(getCartTotal());
+        }
+
+        function updateCartItemQty(index, delta) {
+            const item = cart[index];
+            if (!item) return;
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                removeCartItem(index);
+                return;
+            }
+            saveCart();
+            updateCartBadge();
+            renderCart();
+        }
+
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartBadge();
+            renderCart();
+            showToast('Item removed from cart', 'ph-trash');
+        }
+
+        function updateSummary(subtotal) {
+            const shipping = subtotal > 100 ? 0 : 15;
+            const tax = subtotal * 0.08;
+            const total = subtotal + shipping + tax - appliedDiscount;
+
+            document.getElementById('summary-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('summary-shipping').textContent = shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`;
+            document.getElementById('summary-tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('summary-total').textContent = `$${total.toFixed(2)}`;
+
+            if (appliedDiscount > 0) {
+                document.getElementById('discount-row').classList.remove('hidden');
+                document.getElementById('summary-discount').textContent = `-$${appliedDiscount.toFixed(2)}`;
+            } else {
+                document.getElementById('discount-row').classList.add('hidden');
+            }
+        }
+
+        function applyPromo() {
+            const input = document.getElementById('promo-input');
+            const message = document.getElementById('promo-message');
+            const code = input.value.trim().toUpperCase();
+
+            if (!code) return;
+
+            const promos = {
+                'SAVE10': 0.10,
+                'SAVE20': 0.20,
+                'WELCOME': 0.15,
+                'ZIDARO50': 0.50
+            };
+
+            if (promos[code]) {
+                const subtotal = getCartTotal();
+                appliedDiscount = subtotal * promos[code];
+                updateSummary(subtotal);
+                message.textContent = `Promo code applied! You saved ${(promos[code] * 100)}%`;
+                message.className = 'text-sm mt-2 text-green-600 font-medium';
+                message.classList.remove('hidden');
+                showToast('Promo code applied!', 'ph-tag');
+            } else {
+                message.textContent = 'Invalid promo code. Try SAVE10 or WELCOME';
+                message.className = 'text-sm mt-2 text-red-500';
+                message.classList.remove('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+        });
+    </script>
+</body>
+</html>

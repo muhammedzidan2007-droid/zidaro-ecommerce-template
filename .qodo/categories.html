@@ -1,0 +1,549 @@
+
+categories_html = '''<!-- ============================================ -->
+<!-- ZIDARO - categories.html | Categories Page   -->
+<!-- ============================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories | Zidaro - Premium Footwear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#010528',
+                        accent: '#004BBE',
+                        'accent-light': '#1a6bff',
+                        'accent-glow': '#0066ff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #010528; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #004BBE; }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-60px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(60px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-right.active { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.85); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-scale.active { opacity: 1; transform: scale(1); }
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .float-anim-delay { animation: float 6s ease-in-out 2s infinite; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #004BBE 0%, #1a6bff 50%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 75, 190, 0.15);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .banner-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .banner-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0, 75, 190, 0.2);
+        }
+        .banner-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .banner-card:hover::before {
+            opacity: 1;
+        }
+
+        .cat-icon-box {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cat-card:hover .cat-icon-box {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: translateY(-4px) scale(1.1);
+            background: #004BBE;
+            color: white;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-gray-50 antialiased overflow-x-hidden">
+
+    <!-- ============================================ -->
+    <!-- NAVBAR -->
+    <!-- ============================================ -->
+    <nav class="bg-primary/95 backdrop-blur-md shadow-lg fixed w-full top-0 z-50 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl group-hover:bg-accent-light transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                    <i class="ph ph-sneaker-move"></i>
+                </div>
+                <span class="text-2xl font-bold text-white tracking-tight">Zidaro</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    Home
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="shop.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    Shop
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="categories.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    Categories
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="about.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    About
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="contact.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    Contact
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="wishlist.html" class="relative text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                    <i class="ph ph-heart text-2xl"></i>
+                </a>
+                <a href="cart.html" class="relative text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                    <i class="ph ph-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 w-5 h-5 bg-accent rounded-full text-xs flex items-center justify-center font-bold text-white hidden">0</span>
+                </a>
+                <a href="auth.html" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                    <i class="ph ph-user text-2xl"></i>
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white transition-colors">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-primary border-t border-gray-800">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Home</a>
+                <a href="shop.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Shop</a>
+                <a href="categories.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Categories</a>
+                <a href="about.html" class="block text-gray-300 hover:text-white py-2 transition-colors">About</a>
+                <a href="contact.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- HERO SECTION -->
+    <!-- ============================================ -->
+    <section class="relative pt-32 pb-20 bg-primary overflow-hidden">
+        <div class="blob w-96 h-96 bg-accent top-0 right-0"></div>
+        <div class="blob w-80 h-80 bg-accent-light bottom-0 left-0"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="reveal">
+                    <span class="inline-block px-4 py-1.5 bg-accent/20 text-accent-light text-sm font-semibold rounded-full mb-6 border border-accent/30">
+                        Browse Collections
+                    </span>
+                </div>
+                <h1 class="reveal delay-100 text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">
+                    Shop by <span class="gradient-text">Category</span>
+                </h1>
+                <p class="reveal delay-200 text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+                    Find the perfect pair for every occasion. From running tracks to boardrooms, we have got you covered.
+                </p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-50 to-transparent"></div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CATEGORY CARDS -->
+    <!-- ============================================ -->
+    <section class="py-20 -mt-12 relative z-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Running -->
+                <a href="shop.html?cat=running" class="cat-card reveal card-hover bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center group">
+                    <div class="cat-icon-box w-20 h-20 bg-blue-50 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl text-accent group-hover:bg-accent group-hover:text-white transition-colors duration-300">
+                        <i class="ph ph-person-simple-run"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-2 group-hover:text-accent transition-colors">Running</h3>
+                    <p class="text-gray-400 mb-4">Performance engineered</p>
+                    <div class="inline-flex items-center gap-1 text-sm text-accent font-semibold">
+                        <span>24 Products</span>
+                        <i class="ph ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+                <!-- Casual -->
+                <a href="shop.html?cat=casual" class="cat-card reveal delay-100 card-hover bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center group">
+                    <div class="cat-icon-box w-20 h-20 bg-green-50 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
+                        <i class="ph ph-sneaker"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-2 group-hover:text-green-600 transition-colors">Casual</h3>
+                    <p class="text-gray-400 mb-4">Everyday comfort</p>
+                    <div class="inline-flex items-center gap-1 text-sm text-green-600 font-semibold">
+                        <span>32 Products</span>
+                        <i class="ph ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+                <!-- Formal -->
+                <a href="shop.html?cat=formal" class="cat-card reveal delay-200 card-hover bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center group">
+                    <div class="cat-icon-box w-20 h-20 bg-amber-50 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-colors duration-300">
+                        <i class="ph ph-boot"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-2 group-hover:text-amber-700 transition-colors">Formal</h3>
+                    <p class="text-gray-400 mb-4">Elegant & refined</p>
+                    <div class="inline-flex items-center gap-1 text-sm text-amber-700 font-semibold">
+                        <span>18 Products</span>
+                        <i class="ph ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+                <!-- Luxury -->
+                <a href="shop.html?cat=luxury" class="cat-card reveal delay-300 card-hover bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center group">
+                    <div class="cat-icon-box w-20 h-20 bg-purple-50 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+                        <i class="ph ph-crown"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-2 group-hover:text-purple-600 transition-colors">Luxury</h3>
+                    <p class="text-gray-400 mb-4">Exclusive designs</p>
+                    <div class="inline-flex items-center gap-1 text-sm text-purple-600 font-semibold">
+                        <span>12 Products</span>
+                        <i class="ph ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- COLLECTION BANNERS -->
+    <!-- ============================================ -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-block px-4 py-1.5 bg-accent/10 text-accent text-sm font-semibold rounded-full mb-4 border border-accent/20">
+                    Curated For You
+                </span>
+                <h2 class="text-4xl md:text-5xl font-black text-primary mb-4">Explore <span class="gradient-text">Collections</span></h2>
+                <p class="text-gray-500 text-lg max-w-2xl mx-auto">Handpicked collections designed for every lifestyle and occasion.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Running Banner -->
+                <a href="shop.html?cat=running" class="banner-card reveal group block relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 rounded-3xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                    <div class="relative z-10 p-8 md:p-10 flex flex-col h-full min-h-[280px]">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl text-white">
+                                <i class="ph ph-person-simple-run"></i>
+                            </div>
+                            <span class="bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-4 py-2 rounded-full">24 Products</span>
+                        </div>
+                        <div class="mt-auto">
+                            <h3 class="text-3xl font-black text-white mb-3">Running</h3>
+                            <p class="text-white/70 max-w-sm mb-6 leading-relaxed">Performance shoes engineered for speed, comfort, and endurance. Push your limits with every stride.</p>
+                            <div class="inline-flex items-center gap-2 text-white font-bold group-hover:gap-4 transition-all">
+                                <span>Shop Collection</span>
+                                <i class="ph ph-arrow-right text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Casual Banner -->
+                <a href="shop.html?cat=casual" class="banner-card reveal delay-100 group block relative bg-gradient-to-br from-emerald-600 via-emerald-700 to-green-900 rounded-3xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                    <div class="relative z-10 p-8 md:p-10 flex flex-col h-full min-h-[280px]">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl text-white">
+                                <i class="ph ph-sneaker"></i>
+                            </div>
+                            <span class="bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-4 py-2 rounded-full">32 Products</span>
+                        </div>
+                        <div class="mt-auto">
+                            <h3 class="text-3xl font-black text-white mb-3">Casual</h3>
+                            <p class="text-white/70 max-w-sm mb-6 leading-relaxed">Everyday sneakers that blend style with all-day comfort. Perfect for any occasion, any time.</p>
+                            <div class="inline-flex items-center gap-2 text-white font-bold group-hover:gap-4 transition-all">
+                                <span>Shop Collection</span>
+                                <i class="ph ph-arrow-right text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Formal Banner -->
+                <a href="shop.html?cat=formal" class="banner-card reveal delay-200 group block relative bg-gradient-to-br from-amber-600 via-amber-700 to-orange-900 rounded-3xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                    <div class="relative z-10 p-8 md:p-10 flex flex-col h-full min-h-[280px]">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl text-white">
+                                <i class="ph ph-boot"></i>
+                            </div>
+                            <span class="bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-4 py-2 rounded-full">18 Products</span>
+                        </div>
+                        <div class="mt-auto">
+                            <h3 class="text-3xl font-black text-white mb-3">Formal</h3>
+                            <p class="text-white/70 max-w-sm mb-6 leading-relaxed">Elegant designs for business meetings and special occasions. Make a lasting impression wherever you go.</p>
+                            <div class="inline-flex items-center gap-2 text-white font-bold group-hover:gap-4 transition-all">
+                                <span>Shop Collection</span>
+                                <i class="ph ph-arrow-right text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Luxury Banner -->
+                <a href="shop.html?cat=luxury" class="banner-card reveal delay-300 group block relative bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-900 rounded-3xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                    <div class="relative z-10 p-8 md:p-10 flex flex-col h-full min-h-[280px]">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl text-white">
+                                <i class="ph ph-crown"></i>
+                            </div>
+                            <span class="bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-4 py-2 rounded-full">12 Products</span>
+                        </div>
+                        <div class="mt-auto">
+                            <h3 class="text-3xl font-black text-white mb-3">Luxury</h3>
+                            <p class="text-white/70 max-w-sm mb-6 leading-relaxed">Exclusive designer pieces for the discerning collector. The pinnacle of footwear craftsmanship.</p>
+                            <div class="inline-flex items-center gap-2 text-white font-bold group-hover:gap-4 transition-all">
+                                <span>Shop Collection</span>
+                                <i class="ph ph-arrow-right text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- TRENDING PRODUCTS -->
+    <!-- ============================================ -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-12 reveal">
+                <div>
+                    <span class="inline-block px-4 py-1.5 bg-accent/10 text-accent text-sm font-semibold rounded-full mb-4 border border-accent/20">
+                        Hot Right Now
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-black text-primary">Trending <span class="gradient-text">Products</span></h2>
+                    <p class="text-gray-500 mt-3 text-lg">Most popular picks across all categories</p>
+                </div>
+                <a href="shop.html" class="hidden md:flex items-center gap-2 text-accent font-bold hover:underline transition-all bg-white px-6 py-3 rounded-xl shadow-sm border border-gray-100 hover:shadow-md">
+                    View All
+                    <i class="ph ph-arrow-right"></i>
+                </a>
+            </div>
+            <div id="trending-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Injected by JS -->
+            </div>
+            <div class="mt-10 text-center md:hidden">
+                <a href="shop.html" class="inline-flex items-center gap-2 text-accent font-bold bg-white px-6 py-3 rounded-xl shadow-sm border border-gray-100">
+                    View All Products
+                    <i class="ph ph-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CTA SECTION -->
+    <!-- ============================================ -->
+    <section class="py-20 bg-primary relative overflow-hidden">
+        <div class="blob w-96 h-96 bg-accent top-0 right-0"></div>
+        <div class="blob w-80 h-80 bg-accent-light bottom-0 left-0"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="reveal">
+                <div class="w-20 h-20 bg-accent/20 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-8 float-anim">🛍️</div>
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-6">Not Sure What to Pick?</h2>
+                <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">Browse our full catalog and filter by price, size, color, and more to find your perfect match.</p>
+                <a href="shop.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent hover:bg-accent-light text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                    <i class="ph ph-shopping-bag text-xl"></i>
+                    <span>Shop All Products</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================ -->
+    <footer class="bg-primary border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div class="lg:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-6">
+                        <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl">
+                            <i class="ph ph-sneaker-move"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white tracking-tight">Zidaro</span>
+                    </a>
+                    <p class="text-gray-400 leading-relaxed mb-6">Premium footwear crafted for those who refuse to compromise on style, comfort, or quality.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="social-icon w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="ph ph-instagram-logo"></i>
+                        </a>
+                        <a href="#" class="social-icon w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="ph ph-facebook-logo"></i>
+                        </a>
+                        <a href="#" class="social-icon w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="ph ph-twitter-logo"></i>
+                        </a>
+                        <a href="#" class="social-icon w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="ph ph-youtube-logo"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-accent transition-colors">Shop All</a></li>
+                        <li><a href="categories.html" class="text-gray-400 hover:text-accent transition-colors">Categories</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Customer Service</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Shipping Info</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Returns & Exchanges</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Size Guide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Track Order</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe for exclusive offers, new arrivals, and style tips.</p>
+                    <form class="flex gap-2" onsubmit="event.preventDefault(); showToast('Subscribed successfully!', 'ph-envelope');">
+                        <input type="email" placeholder="Your email" class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent transition-colors">
+                        <button type="submit" class="px-4 py-3 bg-accent text-white rounded-lg hover:bg-accent-light transition-colors">
+                            <i class="ph ph-paper-plane-right text-xl"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2026 Zidaro. All rights reserved.</p>
+                <div class="flex items-center gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-accent transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-accent transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-accent transition-colors">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-full shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i id="toast-icon" class="ph ph-check-circle text-accent text-xl"></i>
+        <span id="toast-message">Item added to cart!</span>
+    </div>
+
+    <script src="./js/main.js"></script>
+    <script>
+        // Active Navbar Link
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.remove('text-gray-300');
+                link.classList.add('text-white', 'font-semibold');
+                const line = link.querySelector('span');
+                if (line) {
+                    line.classList.remove('w-0');
+                    line.classList.add('w-full');
+                }
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.className = 'ph ph-list text-2xl';
+            } else {
+                icon.className = 'ph ph-x text-2xl';
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Trending Products
+        document.addEventListener('DOMContentLoaded', () => {
+            const trending = allProducts.slice(0, 4);
+            const container = document.getElementById('trending-products');
+            if (container && typeof createProductCard === 'function') {
+                container.innerHTML = trending.map(p => createProductCard(p)).join('');
+                if (typeof updateWishlistIcons === 'function') updateWishlistIcons();
+            }
+        });
+    </script>
+</body>
+</html>

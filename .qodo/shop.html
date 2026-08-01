@@ -1,0 +1,673 @@
+
+shop_html_fixed = '''<!-- ============================================ -->
+<!-- ZIDARO - shop.html | Shop Page               -->
+<!-- ============================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Zidaro - Premium Footwear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#010528',
+                        accent: '#004BBE',
+                        'accent-light': '#1a6bff',
+                        'accent-glow': '#0066ff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #010528; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #004BBE; }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #004BBE 0%, #1a6bff 50%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .filter-checkbox:checked + div {
+            background-color: #004BBE;
+            border-color: #004BBE;
+        }
+        .filter-checkbox:checked + div svg {
+            display: block;
+        }
+
+        .sort-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7280' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: translateY(-4px) scale(1.1);
+            background: #004BBE;
+            color: white;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-gray-50 antialiased overflow-x-hidden">
+
+    <!-- ============================================ -->
+    <!-- NAVBAR -->
+    <!-- ============================================ -->
+    <nav class="bg-primary/95 backdrop-blur-md shadow-lg fixed w-full top-0 z-50 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl group-hover:bg-accent-light transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                    <i class="ph ph-sneaker-move"></i>
+                </div>
+                <span class="text-2xl font-bold text-white tracking-tight">Zidaro</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    Home
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="shop.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    Shop
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="categories.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    Categories
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="about.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    About
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="contact.html" class="text-gray-300 hover:text-white font-medium transition-colors relative group">
+                    Contact
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="wishlist.html" class="relative text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                    <i class="ph ph-heart text-2xl"></i>
+                </a>
+                <a href="cart.html" class="relative text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                    <i class="ph ph-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 w-5 h-5 bg-accent rounded-full text-xs flex items-center justify-center font-bold text-white hidden">0</span>
+                </a>
+                <a href="auth.html" class="text-gray-300 hover:text-white transition-all duration-300 hover:scale-110">
+                    <i class="ph ph-user text-2xl"></i>
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white transition-colors p-2" type="button" aria-label="Toggle menu">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-primary border-t border-gray-800 absolute w-full left-0 top-full shadow-2xl">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">Home</a>
+                <a href="shop.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">Shop</a>
+                <a href="categories.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">Categories</a>
+                <a href="about.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">About</a>
+                <a href="contact.html" class="block text-gray-300 hover:text-white hover:bg-white/5 py-2 px-3 rounded-lg transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- HERO SECTION -->
+    <!-- ============================================ -->
+    <section class="relative pt-24 pb-10 bg-primary overflow-hidden">
+        <div class="blob w-64 h-64 bg-accent top-0 right-0"></div>
+        <div class="blob w-48 h-48 bg-accent-light bottom-0 left-0"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center max-w-2xl mx-auto">
+                <!-- ✅ أضفنا active مباشرة لأنها فوق الصفحة -->
+                <div class="reveal active">
+                    <span class="inline-block px-4 py-1 bg-accent/20 text-accent-light text-sm font-semibold rounded-full mb-4 border border-accent/30">
+                        All Products
+                    </span>
+                </div>
+                <h1 class="reveal active delay-100 text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 leading-tight">
+                    Our <span class="gradient-text">Collection</span>
+                </h1>
+                <p class="reveal active delay-200 text-gray-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+                    Browse our full catalog of premium footwear. Filter by category, price, and more to find your perfect pair.
+                </p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-gray-50 to-transparent"></div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SHOP CONTENT -->
+    <!-- ============================================ -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- ============================================ -->
+            <!-- SIDEBAR FILTERS -->
+            <!-- ============================================ -->
+            <aside class="lg:w-72 flex-shrink-0">
+                <div class="lg:sticky lg:top-24 space-y-6">
+                    <!-- Mobile Filter Toggle -->
+                    <button id="filter-toggle" class="lg:hidden w-full bg-white border border-gray-200 rounded-xl px-4 py-3 font-semibold text-primary flex items-center justify-between">
+                        <span class="flex items-center gap-2"><i class="ph ph-faders text-accent"></i> Filters</span>
+                        <i class="ph ph-caret-down"></i>
+                    </button>
+
+                    <div id="filters-container" class="hidden lg:block space-y-6">
+                        <!-- Search -->
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                            <h4 class="font-bold text-primary mb-3">Search</h4>
+                            <div class="relative">
+                                <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" id="search-input" placeholder="Search products..."
+                                    class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <!-- Categories -->
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                            <h4 class="font-bold text-primary mb-3">Categories</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" class="filter-checkbox hidden" value="Running" onchange="applyFilters()">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-all group-hover:border-accent">
+                                        <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-gray-600 group-hover:text-accent transition-colors text-sm">Running</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" class="filter-checkbox hidden" value="Casual" onchange="applyFilters()">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-all group-hover:border-accent">
+                                        <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-gray-600 group-hover:text-accent transition-colors text-sm">Casual</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" class="filter-checkbox hidden" value="Formal" onchange="applyFilters()">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-all group-hover:border-accent">
+                                        <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-gray-600 group-hover:text-accent transition-colors text-sm">Formal</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" class="filter-checkbox hidden" value="Luxury" onchange="applyFilters()">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-all group-hover:border-accent">
+                                        <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-gray-600 group-hover:text-accent transition-colors text-sm">Luxury</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                            <h4 class="font-bold text-primary mb-3">Price Range</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" class="filter-checkbox hidden" value="0-100" onchange="applyFilters()">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-all group-hover:border-accent">
+                                        <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-gray-600 group-hover:text-accent transition-colors text-sm">Under $100</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" class="filter-checkbox hidden" value="100-200" onchange="applyFilters()">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-all group-hover:border-accent">
+                                        <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-gray-600 group-hover:text-accent transition-colors text-sm">$100 - $200</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" class="filter-checkbox hidden" value="200-9999" onchange="applyFilters()">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-all group-hover:border-accent">
+                                        <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-gray-600 group-hover:text-accent transition-colors text-sm">$200+</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- On Sale -->
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="sale-filter" class="filter-checkbox hidden" onchange="applyFilters()">
+                                <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-all group-hover:border-accent">
+                                    <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-gray-600 group-hover:text-accent transition-colors text-sm font-medium">On Sale Only</span>
+                            </label>
+                        </div>
+
+                        <!-- Clear Filters -->
+                        <button onclick="clearFilters()" class="w-full py-3 border-2 border-gray-200 rounded-xl text-gray-600 font-semibold hover:border-accent hover:text-accent transition-all flex items-center justify-center gap-2">
+                            <i class="ph ph-arrow-counter-clockwise"></i>
+                            Clear Filters
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- ============================================ -->
+            <!-- PRODUCTS GRID -->
+            <!-- ============================================ -->
+            <div class="flex-1">
+                <!-- Toolbar -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 reveal active">
+                    <div>
+                        <h2 class="text-2xl font-bold text-primary">All Products</h2>
+                        <p class="text-gray-500 text-sm mt-1"><span id="product-count">0</span> products found</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <label class="text-sm text-gray-500 hidden sm:block">Sort by:</label>
+                        <select id="sort-select" onchange="applyFilters()" class="sort-select bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 focus:outline-none focus:border-accent cursor-pointer">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Top Rated</option>
+                            <option value="newest">Newest</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Active Filters -->
+                <div id="active-filters" class="flex flex-wrap gap-2 mb-6 hidden">
+                    <!-- Injected by JS -->
+                </div>
+
+                <!-- Products Grid -->
+                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Injected by JS -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden text-center py-20">
+                    <div class="text-8xl mb-6">🔍</div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">No Products Found</h3>
+                    <p class="text-gray-500 mb-6">Try adjusting your filters or search terms.</p>
+                    <button onclick="clearFilters()" class="bg-accent hover:bg-accent-light text-white px-6 py-3 rounded-xl font-bold transition-all">
+                        Clear All Filters
+                    </button>
+                </div>
+
+                <!-- Load More -->
+                <div class="mt-12 text-center">
+                    <button id="load-more-btn" onclick="loadMore()" class="inline-flex items-center gap-2 bg-white border-2 border-gray-200 text-primary px-8 py-3 rounded-xl font-bold hover:border-accent hover:text-accent transition-all">
+                        Load More
+                        <i class="ph ph-caret-down"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================ -->
+    <footer class="bg-primary border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div class="lg:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-6">
+                        <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white text-xl">
+                            <i class="ph ph-sneaker-move"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white tracking-tight">Zidaro</span>
+                    </a>
+                    <p class="text-gray-400 leading-relaxed mb-6">Premium footwear crafted for those who refuse to compromise on style, comfort, or quality.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="social-icon w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="ph ph-instagram-logo"></i>
+                        </a>
+                        <a href="#" class="social-icon w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="ph ph-facebook-logo"></i>
+                        </a>
+                        <a href="#" class="social-icon w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="ph ph-twitter-logo"></i>
+                        </a>
+                        <a href="#" class="social-icon w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="ph ph-youtube-logo"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-accent transition-colors">Shop All</a></li>
+                        <li><a href="categories.html" class="text-gray-400 hover:text-accent transition-colors">Categories</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Customer Service</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Shipping Info</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Returns & Exchanges</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Size Guide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Track Order</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe for exclusive offers, new arrivals, and style tips.</p>
+                    <form class="flex gap-2" onsubmit="event.preventDefault(); showToast('Subscribed successfully!', 'ph-envelope');">
+                        <input type="email" placeholder="Your email" class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent transition-colors">
+                        <button type="submit" class="px-4 py-3 bg-accent text-white rounded-lg hover:bg-accent-light transition-colors">
+                            <i class="ph ph-paper-plane-right text-xl"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2026 Zidaro. All rights reserved.</p>
+                <div class="flex items-center gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-accent transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-accent transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-accent transition-colors">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-full shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i id="toast-icon" class="ph ph-check-circle text-accent text-xl"></i>
+        <span id="toast-message">Item added to cart!</span>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
+    <script src="../js/main.js"></script>
+
+    <script>
+        // ============================================
+        // SHOP PAGE JAVASCRIPT
+        // ============================================
+
+        let displayedCount = 0;
+        const ITEMS_PER_PAGE = 9;
+        let currentFilteredProducts = [];
+
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check URL params for category filter
+            const catParam = getUrlParam('cat');
+            if (catParam) {
+                const checkbox = document.querySelector(`input[value="${catParam.charAt(0).toUpperCase() + catParam.slice(1)}"]`);
+                if (checkbox) checkbox.checked = true;
+            }
+
+            // Check URL params for sale filter
+            const saleParam = getUrlParam('sale');
+            if (saleParam === 'true') {
+                document.getElementById('sale-filter').checked = true;
+            }
+
+            applyFilters();
+
+            // Mobile filter toggle
+            const filterToggle = document.getElementById('filter-toggle');
+            const filtersContainer = document.getElementById('filters-container');
+            if (filterToggle && filtersContainer) {
+                filterToggle.addEventListener('click', () => {
+                    filtersContainer.classList.toggle('hidden');
+                    const icon = filterToggle.querySelector('.ph-caret-down, .ph-caret-up');
+                    if (icon) {
+                        icon.className = filtersContainer.classList.contains('hidden') ? 'ph ph-caret-down' : 'ph ph-caret-up';
+                    }
+                });
+            }
+
+            // Search input debounce
+            const searchInput = document.getElementById('search-input');
+            let searchTimeout;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(applyFilters, 300);
+            });
+        });
+
+        // ============================================
+        // FILTERING & SORTING
+        // ============================================
+
+        function applyFilters() {
+            let filtered = [...allProducts];
+
+            // Category filter
+            const selectedCats = Array.from(document.querySelectorAll('.filter-checkbox:checked')).map(cb => cb.value);
+            const catFilters = selectedCats.filter(v => ['Running', 'Casual', 'Formal', 'Luxury'].includes(v));
+            if (catFilters.length > 0) {
+                filtered = filtered.filter(p => catFilters.includes(p.category));
+            }
+
+            // Price filter
+            const priceFilters = selectedCats.filter(v => v.includes('-'));
+            if (priceFilters.length > 0) {
+                filtered = filtered.filter(p => {
+                    return priceFilters.some(range => {
+                        const [min, max] = range.split('-').map(Number);
+                        return p.price >= min && p.price <= max;
+                    });
+                });
+            }
+
+            // Sale filter
+            if (document.getElementById('sale-filter').checked) {
+                filtered = filtered.filter(p => p.oldPrice && p.oldPrice > p.price);
+            }
+
+            // Search filter
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            if (searchTerm) {
+                filtered = filtered.filter(p =>
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.category.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Sorting
+            const sortValue = document.getElementById('sort-select').value;
+            switch(sortValue) {
+                case 'price-low':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filtered.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'newest':
+                    filtered.sort((a, b) => b.id - a.id);
+                    break;
+                default:
+                    break;
+            }
+
+            currentFilteredProducts = filtered;
+            displayedCount = 0;
+            renderProducts();
+            updateActiveFilters();
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('products-grid');
+            const emptyState = document.getElementById('empty-state');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+
+            document.getElementById('product-count').textContent = currentFilteredProducts.length;
+
+            if (currentFilteredProducts.length === 0) {
+                container.innerHTML = '';
+                container.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                loadMoreBtn.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            const toShow = currentFilteredProducts.slice(0, displayedCount + ITEMS_PER_PAGE);
+
+            container.innerHTML = toShow.map((p, i) => {
+                const delay = (i % 3) * 100;
+                return `<div class="reveal" style="transition-delay: ${delay}ms">${createProductCard(p)}</div>`;
+            }).join('');
+
+            displayedCount = toShow.length;
+
+            if (displayedCount >= currentFilteredProducts.length) {
+                loadMoreBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.remove('hidden');
+            }
+
+            // ✅ إعادة تهيئة الـ Observer بعد إنشاء البطاقات
+            if (typeof refreshScrollAnimations === 'function') {
+                refreshScrollAnimations();
+            }
+
+            // ✅ Fallback: فعل كل العناصر بعد 500ms لو الـ Observer ما اشتغل
+            setTimeout(() => {
+                document.querySelectorAll('#products-grid .reveal:not(.active)').forEach(el => {
+                    el.classList.add('active');
+                });
+            }, 500);
+
+            if (typeof updateWishlistIcons === 'function') updateWishlistIcons();
+        }
+
+        function loadMore() {
+            const container = document.getElementById('products-grid');
+            const currentHTML = container.innerHTML;
+            const nextBatch = currentFilteredProducts.slice(displayedCount, displayedCount + ITEMS_PER_PAGE);
+
+            const newHTML = nextBatch.map((p, i) => {
+                const delay = (i % 3) * 100;
+                return `<div class="reveal active" style="transition-delay: ${delay}ms">${createProductCard(p)}</div>`;
+            }).join('');
+
+            container.innerHTML = currentHTML + newHTML;
+            displayedCount += nextBatch.length;
+
+            if (displayedCount >= currentFilteredProducts.length) {
+                document.getElementById('load-more-btn').classList.add('hidden');
+            }
+
+            // ✅ إعادة تهيئة الـ Observer للبطاقات الجديدة
+            if (typeof refreshScrollAnimations === 'function') {
+                refreshScrollAnimations();
+            }
+
+            if (typeof updateWishlistIcons === 'function') updateWishlistIcons();
+        }
+
+        function clearFilters() {
+            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+            document.getElementById('search-input').value = '';
+            document.getElementById('sort-select').value = 'featured';
+            applyFilters();
+        }
+
+        function updateActiveFilters() {
+            const container = document.getElementById('active-filters');
+            const selectedCats = Array.from(document.querySelectorAll('.filter-checkbox:checked')).map(cb => cb.value);
+            const searchTerm = document.getElementById('search-input').value.trim();
+
+            let tags = [];
+
+            selectedCats.forEach(val => {
+                if (['Running', 'Casual', 'Formal', 'Luxury'].includes(val)) {
+                    tags.push({ label: val, type: 'category' });
+                } else if (val === '0-100') {
+                    tags.push({ label: 'Under $100', type: 'price' });
+                } else if (val === '100-200') {
+                    tags.push({ label: '$100 - $200', type: 'price' });
+                } else if (val === '200-9999') {
+                    tags.push({ label: '$200+', type: 'price' });
+                }
+            });
+
+            if (searchTerm) {
+                tags.push({ label: `Search: "${searchTerm}"`, type: 'search' });
+            }
+
+            if (tags.length === 0) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            container.innerHTML = tags.map(tag => `
+                <span class="inline-flex items-center gap-1 bg-accent/10 text-accent text-sm font-medium px-3 py-1.5 rounded-full">
+                    ${tag.label}
+                    <button onclick="removeFilter('${tag.label}')" class="hover:text-accent-dark">
+                        <i class="ph ph-x"></i>
+                    </button>
+                </span>
+            `).join('');
+        }
+
+        function removeFilter(label) {
+            clearFilters();
+        }
+
+        // ============================================
+        // NAVBAR ACTIVE LINK
+        // ============================================
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.remove('text-gray-300');
+                link.classList.add('text-white', 'font-semibold');
+                const line = link.querySelector('span');
+                if (line) {
+                    line.classList.remove('w-0');
+                    line.classList.add('w-full');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
