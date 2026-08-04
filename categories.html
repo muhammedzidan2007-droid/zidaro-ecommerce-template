@@ -508,19 +508,6 @@
             }
         });
 
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const icon = mobileMenuBtn.querySelector('i');
-            if (mobileMenu.classList.contains('hidden')) {
-                icon.className = 'ph ph-list text-2xl';
-            } else {
-                icon.className = 'ph ph-x text-2xl';
-            }
-        });
-
         // Scroll Reveal Animation
         const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
         const revealObserver = new IntersectionObserver((entries) => {

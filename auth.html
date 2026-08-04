@@ -451,18 +451,6 @@
             }
         });
 
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                const icon = mobileMenuBtn.querySelector('i');
-                if (icon) {
-                    icon.className = mobileMenu.classList.contains('hidden') ? 'ph ph-list text-2xl' : 'ph ph-x text-2xl';
-                }
-            });
-        }
     </script>
 </body>
 </html>
