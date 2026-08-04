@@ -1,4 +1,3 @@
-
 // ============================================
 // GLOBAL PRODUCT DATA
 // ============================================
@@ -426,6 +425,24 @@ function createProductCard(product, showActions = true) {
 }
 
 // ============================================
+// ACTIVE NAV LINK (highlights current page in navbar)
+// ============================================
+function initActiveNavLink() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('nav a').forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.remove('text-gray-300');
+            link.classList.add('text-white', 'font-semibold');
+            const line = link.querySelector('span');
+            if (line) {
+                line.classList.remove('w-0');
+                line.classList.add('w-full');
+            }
+        }
+    });
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -433,4 +450,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initScrollAnimations();
     updateWishlistIcons();
+    initActiveNavLink();
 });
